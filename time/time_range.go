@@ -10,6 +10,19 @@ import (
 func CalTimeRange(t time.Time, timeType constants.TimeType) []time.Time {
 	timeRange := make([]time.Time, 0)
 	switch timeType {
+	case constants.TIME_TYPE__MIN:
+		y, m, d := t.Date()
+		h := t.Hour()
+		min := t.Minute()
+		start := time.Date(y, m, d, h, min, 0, 0, time.Local)
+		end := time.Date(y, m, d, h, min+1, 0, 0, time.Local).Add(-1 * time.Second)
+		timeRange = append(timeRange, start, end)
+	case constants.TIME_TYPE__HOUR:
+		y, m, d := t.Date()
+		h := t.Hour()
+		start := time.Date(y, m, d, h, 0, 0, 0, time.Local)
+		end := time.Date(y, m, d, h+1, 0, 0, 0, time.Local).Add(-1 * time.Second)
+		timeRange = append(timeRange, start, end)
 	case constants.TIME_TYPE__DAY:
 		y, m, d := t.Date()
 		start := time.Date(y, m, d, 0, 0, 0, 0, time.Local)
